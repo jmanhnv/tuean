@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC  "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+	<!-- Base Definition -->
+	<definition name="base-definition" template="/WEB-INF/views/tiles/layouts/base-layout.jsp">
+		<put-attribute name="title" value="home.title" />
+		<put-attribute name="header" value="/WEB-INF/views/tiles/includes/header.jsp" />
+		<put-attribute name="menu" value="/WEB-INF/views/tiles/includes/menu.jsp" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer" value="/WEB-INF/views/tiles/includes/footer.jsp" />
+	</definition>
+	<!-- Dashboard Page -->
+	<definition name="dashboard" extends="base-definition">
+		<!-- <put-attribute name="title" value="Trang chủ" /> -->
+		<put-attribute name="body" value="/WEB-INF/views/pages/dashboard.jsp" />
+	</definition>
+	<!-- Login Page -->
+	<definition name="login-layout" template="/WEB-INF/views/tiles/layouts/login-layout.jsp">
+		<put-attribute name="title" value="login.title" />
+		<put-attribute name="body" value="" />
+	</definition>
+	<definition name="loginpage" extends="login-layout">
+		<put-attribute name="body" value="/WEB-INF/views/pages/login.jsp" />
+	</definition>
+	<!-- Upload Page -->
+	<definition name="uploadfile" extends="base-definition">
+		<put-attribute name="body" value="/WEB-INF/views/pages/uploadfile.jsp" />
+	</definition>
+	<!-- Upload success Page -->
+	<definition name="uploadstatus" extends="base-definition">
+		<put-attribute name="body" value="/WEB-INF/views/pages/uploadstatus.jsp" />
+	</definition>
+	<!-- INTRODUCTION Page -->
+	<definition name="introduce" extends="base-definition">
+		<put-attribute name="body" value="/WEB-INF/views/pages/introduction.jsp" />
+	</definition>
+	<!-- REGISTER Page -->
+	<definition name="register" extends="base-definition">
+		<put-attribute name="body" value="/WEB-INF/views/pages/register.jsp" />
+	</definition>
+	<!-- CONTACT Page -->
+	<definition name="contact" extends="base-definition">
+		<put-attribute name="body" value="/WEB-INF/views/pages/contact.jsp" />
+	</definition>
+	<!-- PRODUCT Page -->
+	<definition name="product" extends="base-definition">
+		<put-attribute name="body" value="/WEB-INF/views/pages/product.jsp" />
+	</definition>
+</tiles-definitions>
