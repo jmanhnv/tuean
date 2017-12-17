@@ -75,7 +75,7 @@ public class AppConfig extends WebMvcConfigurerAdapter implements ConstUtil {
 		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
 
 		// Load property in message/validator.properties
-		messageSource.setBasenames(new String[] { "messages", "validation-msg", "labels" });
+		messageSource.setBasenames(new String[] { "labels", "messages" });
 
 		// if true, the key of the message will be displayed if the key is not found,
 		// instead of throwing a NoSuchMessageException

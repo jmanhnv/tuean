@@ -66,7 +66,8 @@ public class AppController implements Actions, ConstUtil {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		if (auth != null) new SecurityContextLogoutHandler().logout(req, resp, auth);
 
-		model.addAttribute("msg", "You have been logged out successfully.");
+		model.addAttribute("msg", messageSource.getMessage("logout.msg", new Object[] { "Johny Nguyen" },
+				LocaleContextHolder.getLocale()));
 		// return "redirect:/loginpage?logout";
 		return LOGIN_PAGE;
 	}

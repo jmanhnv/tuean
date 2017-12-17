@@ -3,7 +3,7 @@
 <tiles-definitions>
 	<!-- Base Definition -->
 	<definition name="base-definition" template="/WEB-INF/views/tiles/layouts/base-layout.jsp">
-		<put-attribute name="title" value="home.title" />
+		<put-attribute name="title" value="dashboard" />
 		<put-attribute name="header" value="/WEB-INF/views/tiles/includes/header.jsp" />
 		<put-attribute name="menu" value="/WEB-INF/views/tiles/includes/menu.jsp" />
 		<put-attribute name="body" value="" />
@@ -11,7 +11,6 @@
 	</definition>
 	<!-- Dashboard Page -->
 	<definition name="dashboard" extends="base-definition">
-		<!-- <put-attribute name="title" value="Trang chủ" /> -->
 		<put-attribute name="body" value="/WEB-INF/views/pages/dashboard.jsp" />
 	</definition>
 	<!-- Login Page -->

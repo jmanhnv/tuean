@@ -1,6 +1,8 @@
 package com.tuean.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,6 +19,9 @@ import com.tuean.util.ConstUtil;
 @Controller
 public class LoginController implements Actions, ConstUtil {
 	@Autowired
+	private MessageSource messageSource;
+
+	@Autowired
 	private UserService userService;
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -29,11 +34,12 @@ public class LoginController implements Actions, ConstUtil {
 				model.addAttribute("msg", user.getName());
 				return DASHBOARD;
 			} catch (Exception e) {
-				model.addAttribute("error", "Invalid username and password.");
+				model.addAttribute("error",
+						messageSource.getMessage("login.failure", null, LocaleContextHolder.getLocale()));
 				return LOGIN_PAGE;
 			}
 		} else {
-			model.addAttribute("error", "Please enter your login details.");
+			model.addAttribute("error", messageSource.getMessage("login.empty", null, LocaleContextHolder.getLocale()));
 			return LOGIN_PAGE;
 		}
 	}
