@@ -84,6 +84,9 @@
 	<script src="assets/js/oneui.min-3.3.js"></script>
 	<script src="assets/js/plugins/chartjsv2/Chart.min.js"></script>
 	<script src="assets/js/pages/base_pages_dashboard_v3.js"></script>
+	<script src="assets/js/pages/base_pages_register.js"></script>
+	<!--  -->
+	<script src="assets/js/plugins/jquery-validation/jquery.validate.min.js"></script>
 
 	<!-- Back-to-top -->
 	<script src="assets/js/back.top.js"></script>
@@ -103,7 +106,8 @@
 	<!-- Page JS Code -->
 	<script type="text/javascript">
 		jQuery(function() {
-			App.initHelpers([ 'table-tools', 'magnific-popup', 'slick',	'datepicker', 'datetimepicker', 'slimscroll', 'tags-inputs', 'notify' ]);
+		App.initHelpers([ 'table-tools', 'magnific-popup', 'slick', 'datepicker', 'datetimepicker', 'slimscroll',
+					'tags-inputs', 'notify', 'appear-countTo' ]);
 		});
 	</script>
 </body>

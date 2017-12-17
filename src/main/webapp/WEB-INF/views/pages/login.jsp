@@ -8,8 +8,8 @@
 			<div class="block block-themed animated fadeIn">
 				<div class="block-header bg-primary">
 					<ul class="block-options">
-						<li><a href="base_pages_reminder.php"><spring:message code="login.forgot.password" /></a></li>
-						<li><a href="base_pages_register.php" data-toggle="tooltip" data-placement="left" title="New Account"><i
+						<li><a href="javascript:void(0)"><spring:message code="login.forgot.password" /></a></li>
+						<li><a href="javascript:void(0)" data-toggle="tooltip" data-placement="left" title="New Account"><i
 								class="si si-plus"></i></a></li>
 					</ul>
 					<h3 class="block-title"><spring:message code="login.subject" /></h3>

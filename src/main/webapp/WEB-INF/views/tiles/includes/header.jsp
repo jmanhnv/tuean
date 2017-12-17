@@ -9,7 +9,7 @@
 			<a class="btn btn-default" href="<c:url value="/locale?lang=vi"/>" data-toggle="tooltip" data-placement="right"
 				title="Vietnam" data-original-title="Vietnam"><img src="assets/img/icon-flag-vn.png" alt="Vietnam"></a>
 			<a class="btn btn-default" href="<c:url value="/loginpage"/>">
-				<span class="btn btn-xs btn-default btn-rounded btn-warning"><i class="si si-login"></i> <spring:message code="header.login" /></span>
+				<i class="fa fa-user-circle-o"></i> <spring:message code="header.login" />
 			</a>
 			<div class="btn-group">
 				<button class="btn btn-default btn-image dropdown-toggle" data-toggle="dropdown" type="button"
