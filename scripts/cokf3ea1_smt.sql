@@ -19,6 +19,9 @@ DROP DATABASE IF EXISTS cokf3ea1_smt;
 -- Create new cokf3ea1_smt
 CREATE DATABASE cokf3ea1_smt CHARACTER SET utf8 COLLATE utf8_general_ci;
 
+-- Selected default db
+USE cokf3ea1_smt;
+
 -- Disable All Checks
 SET FOREIGN_KEY_CHECKS=0;
 
@@ -171,17 +174,32 @@ CREATE TABLE `ta_product_detail` (
 -- Table structure for ta_user
 -- ----------------------------
 DROP TABLE IF EXISTS `ta_user`;
-CREATE TABLE `ta_user` (
+CREATE TABLE `ta_user`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) NOT NULL,
-  `email` varchar(50) NOT NULL,
-  `password` varchar(100) NOT NULL,
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `password` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `role_id` int(11) NOT NULL,
-  `is_active` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0 - Active; 1 - Inactive',
-  `mobile` varchar(20) DEFAULT NULL,
-  `identity_number` varchar(20) NOT NULL,
-  `address` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `role_id` (`role_id`),
-  CONSTRAINT `ta_user_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `ta_mst_role` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `is_active` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0 - Active; 1 - Inactive',
+  `mobile` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `identity_number` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `role_id`(`role_id`) USING BTREE,
+  CONSTRAINT `ta_user_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `ta_mst_role` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of ta_mst_role
+-- ----------------------------
+INSERT INTO `ta_mst_role` VALUES (1, 'ADMIN', NULL);
+INSERT INTO `ta_mst_role` VALUES (2, 'USER', NULL);
+
+-- ----------------------------
+-- Records of ta_user
+-- ----------------------------
+INSERT INTO `ta_user` VALUES (1, 'Johny Nguyen', 'manh.1403@cokhituean.com', '123456', 1, 0, '0915140386', '112032740', 'Hà Nội');
+INSERT INTO `ta_user` VALUES (2, 'Hùng Nguyễn', 'nguyenhung090184@cokhituean.com', '123456', 2, 0, '0966858500', 'N/A', 'N/A');
+INSERT INTO `ta_user` VALUES (3, 'Tính Nguyễn', 'nguyentinh8893@cokhituean.com', '123456', 2, 0, '01656417361', 'N/A', 'N/A');
+
+SET FOREIGN_KEY_CHECKS = 1;
