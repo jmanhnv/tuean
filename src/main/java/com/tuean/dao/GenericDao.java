@@ -11,23 +11,34 @@ public abstract class GenericDao<T extends AbstractEntity> {
 	@Autowired
 	protected JdbcTemplate jdbcTemplate;
 
-	public void insert(String sql, Object... args) {
-
+	/**
+	 * Method use to execute {insert | update | delete} query.
+	 * 
+	 * @param sql
+	 * @param args
+	 */
+	public void executeQuery(String sql, Object... args) {
+		jdbcTemplate.update(sql, args);
 	}
 
-	public void update(String sql, Object... args) {
-
+	/**
+	 * Method use to find object by id as primary key.
+	 * 
+	 * @param sql
+	 * @param id
+	 * @return
+	 */
+	public T findById(String sql, Integer id, Class<T> clazz) {
+		return jdbcTemplate.queryForObject(sql, new Object[] { id }, clazz);
 	}
 
-	public void delete(Integer id) {
-
+	/**
+	 * Method use to find all objects by id as primary key.
+	 * 
+	 * @return
+	 */
+	public List<T> findAll(String sql, Class<T> clazz) {
+		return jdbcTemplate.queryForList(sql, clazz);
 	}
 
-	public T findById(Integer id) {
-		return null;
-	}
-
-	public List<T> findAll() {
-		return null;
-	}
 }

@@ -12,14 +12,20 @@
 						<li><a href="javascript:void(0)" data-toggle="tooltip" data-placement="left" title="New Account"><i
 								class="si si-plus"></i></a></li>
 					</ul>
-					<h3 class="block-title"><spring:message code="login.subject" /></h3>
+					<h3 class="block-title">
+						<spring:message code="login.subject" />
+					</h3>
 				</div>
 				<div class="block-content block-content-full block-content-narrow">
-					<h1 class="h2 font-w600 push-30-t push-5"><spring:message code="sys.company" /></h1>
-					<p><spring:message code="login.welcome" /></p>
+					<h1 class="h2 font-w600 push-30-t push-5">
+						<spring:message code="sys.company" />
+					</h1>
+					<p>
+						<spring:message code="login.welcome" />
+					</p>
 					<c:url var="loginUrl" value="/login" />
-					<form:form class="js-validation-login form-horizontal push-30-t push-50" action="${loginUrl}"
-						method="post" modelAttribute="loginBean">
+					<form:form class="js-validation-login form-horizontal push-30-t push-50" action="${loginUrl}" method="post"
+						modelAttribute="loginBean">
 						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 						<c:if test="${not empty error}">
 							<div class="alert alert-danger alert-dismissable">
@@ -36,8 +42,10 @@
 						<div class="form-group">
 							<div class="col-xs-12">
 								<div class="form-material form-material-primary floating">
-									<input class="form-control" type="text" id="login-username" name="email"> <label
-										for="login-username"><spring:message code="login.email" /></label>
+									<form:input path="email" name="email" id="login-username" cssClass="form-control" />
+									<form:label path="login-username">
+										<spring:message code="login.email" />
+									</form:label>
 								</div>
 							</div>
 						</div>
@@ -59,7 +67,8 @@
 						<div class="form-group">
 							<div class="col-xs-12 col-sm-6 col-md-5">
 								<button class="btn btn-block btn-primary" type="submit">
-									<i class="si si-login pull-right"></i> <spring:message code="login.submit" />
+									<i class="si si-login pull-right"></i>
+									<spring:message code="login.submit" />
 								</button>
 							</div>
 						</div>
@@ -70,5 +79,6 @@
 	</div>
 </div>
 <div class="push-10-t text-center animated fadeInUp">
-	<small class="text-muted font-w600"><span class="js-year-copy"></span> &copy; <spring:message code="sys.company" /> <spring:message code="sys.version" /></small>
+	<small class="text-muted font-w600"><span class="js-year-copy"></span> &copy; <spring:message
+			code="sys.company" /> <spring:message code="sys.version" /></small>
 </div>
