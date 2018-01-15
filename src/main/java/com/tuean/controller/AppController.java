@@ -16,10 +16,12 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.tuean.common.Actions;
+import com.tuean.formbean.LoginForm;
 import com.tuean.util.ConstUtil;
 
 @Controller
@@ -57,12 +59,14 @@ public class AppController implements Actions, ConstUtil {
 
 	////////// LOGIN-IN/OUT ACTION //////////
 	@RequestMapping(value = "/loginpage", method = RequestMethod.GET)
-	public String loginPage() {
+	public String loginPage(@ModelAttribute("loginBean") LoginForm loginBean) {
+		// model.addAttribute("loginBean", new LoginForm());
 		return LOGIN_PAGE;
 	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	public String logout(HttpServletRequest req, HttpServletResponse resp, ModelMap model) {
+	public String logout(HttpServletRequest req, HttpServletResponse resp, ModelMap model,
+			@ModelAttribute("loginBean") LoginForm loginBean) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		if (auth != null) new SecurityContextLogoutHandler().logout(req, resp, auth);
 
@@ -108,7 +112,8 @@ public class AppController implements Actions, ConstUtil {
 	//
 	// private String getPrincipal() {
 	// String userName = null;
-	// Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	// Object principal =
+	// SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 	//
 	// if (principal instanceof UserDetails) {
 	// userName = ((UserDetails) principal).getUsername();

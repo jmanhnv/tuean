@@ -9,7 +9,7 @@
 				<div class="block-header bg-primary">
 					<ul class="block-options">
 						<li><a href="javascript:void(0)"><spring:message code="login.forgot.password" /></a></li>
-						<li><a href="javascript:void(0)" data-toggle="tooltip" data-placement="left" title="New Account"><i
+						<li><a href="javascript:void(0)" data-toggle="tooltip" data-placement="left" title="Register"><i
 								class="si si-plus"></i></a></li>
 					</ul>
 					<h3 class="block-title">
@@ -42,8 +42,8 @@
 						<div class="form-group">
 							<div class="col-xs-12">
 								<div class="form-material form-material-primary floating">
-									<form:input path="email" name="email" id="login-username" cssClass="form-control" />
-									<form:label path="login-username">
+									<form:input path="email" name="email" id="email" cssClass="form-control" />
+									<form:label path="email">
 										<spring:message code="login.email" />
 									</form:label>
 								</div>
@@ -52,14 +52,14 @@
 						<div class="form-group">
 							<div class="col-xs-12">
 								<div class="form-material form-material-primary floating">
-									<input class="form-control" type="password" id="login-password" name="password"> <label
-										for="login-password"><spring:message code="login.password" /></label>
+									<input class="form-control" type="password" id="password" name="password"> <label
+										for="password"><spring:message code="login.password" /></label>
 								</div>
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="col-xs-12">
-								<label class="css-input switch switch-sm switch-primary"> <input type="checkbox" id="login-remember-me"
+								<label class="css-input switch switch-sm switch-primary"> <input type="checkbox" id="remember"
 									name="remember"><span></span> <spring:message code="login.remember" />?
 								</label>
 							</div>
