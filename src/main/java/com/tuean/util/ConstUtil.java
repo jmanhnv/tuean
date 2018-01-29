@@ -15,7 +15,7 @@ public interface ConstUtil {
 	String DASH = "-";
 	String DOLLAR = "$";
 	String PERCENT = "%";
-	String PERIOD = ".";
+	String DOT = ".";
 	String PIPE = "|";
 	String PLUS = "+";
 	String MINUS = "-";
@@ -30,7 +30,12 @@ public interface ConstUtil {
 	String TILDE = "~";
 	String UTF8 = "UTF-8";
 
+	//
+	String FILE_SEPARATOR = System.getProperty("file.separator");
+	String USER_HOME = System.getProperty("user.home");
+	String TMP_DIR = System.getProperty("java.io.tmpdir");
+
 	// Save the uploaded file to this folder
-	String UPLOADED_FOLDER = "C://TEMP//"; // {/home/cokf3ea1/images/}
+	String UPLOADED_FOLDER = USER_HOME + FILE_SEPARATOR + "images"; // {/home/cokf3ea1/images/}
 
 }
