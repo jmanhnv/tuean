@@ -65,8 +65,16 @@ public class AppConfig extends WebMvcConfigurerAdapter implements ConstUtil {
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		// @formatter:off
+				//http://www.baeldung.com/spring-mvc-static-resources
+		// @formatter:on
+
+		// Serving a Resource Stored in the WAR l
 		registry.addResourceHandler("/assets/**").addResourceLocations("/assets/");
-		registry.addResourceHandler("/files/**").addResourceLocations("file:/home/cokf3ea1/images/");
+
+		// Serving a Resource Stored in the File System
+		String externalFilePath = "file:/" + ConstUtil.UPLOADED_FOLDER + "/";
+		registry.addResourceHandler("/alias/**").addResourceLocations(externalFilePath);
 	}
 
 	@Bean

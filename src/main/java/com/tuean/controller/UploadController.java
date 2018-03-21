@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.StringJoiner;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,33 +16,35 @@ import org.springframework.web.multipart.MultipartFile;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.tuean.common.Actions;
-import com.tuean.service.FileServiceImpl;
+import com.tuean.service.FileService;
 import com.tuean.util.ConstUtil;
+import com.tuean.util.ListFilesUtil;
 
 @Controller
 public class UploadController implements Actions, ConstUtil {
+	@Autowired
+	private FileService fileService;
+
 	@RequestMapping(value = "/upload", method = RequestMethod.GET)
 	public String displayUploadForm() {
 		return UPLOADFILE;
 	}
 
 	@RequestMapping(value = "/savefiles", method = RequestMethod.POST)
-	public String saveFiles(@RequestParam("files") MultipartFile[] files, @RequestParam("category") String category,
+	public String saveFiles(@RequestParam("category") String category, @RequestParam("files") MultipartFile[] files,
 			Model map) throws IllegalStateException, IOException {
 		Integer categoryId = Integer.valueOf(category);
-		System.out.println(categoryId);
-
 		StringJoiner sj = new StringJoiner(",");
 		List<String> fileNames = Lists.newArrayList();
 
-		for (MultipartFile file : files) {
-			if (file.isEmpty())
-				continue;
+		// save file to local & db
+		fileService.saveFileUploaded(files, categoryId);
 
+		for (MultipartFile file : files) {
 			String fileName = file.getOriginalFilename();
-			if (!"".equalsIgnoreCase(fileName)) {
+			if (!Strings.isNullOrEmpty(fileName)) {
 				// Handle file content - multipartFile.getInputStream()
-				file.transferTo(new File(getLocalPath(categoryId) + fileName));
+				file.transferTo(new File(ListFilesUtil.getLocalPathByCategoryId(categoryId) + fileName));
 				fileNames.add(fileName);
 
 				sj.add(fileName);
@@ -62,19 +65,4 @@ public class UploadController implements Actions, ConstUtil {
 		return UPLOADFILE_SUCCESS;
 	}
 
-	private String getLocalPath(int categoryId) {
-		String path;
-		if (categoryId == 1)
-			path = FileServiceImpl.BC_FOLDER;
-		else if (categoryId == 2)
-			path = FileServiceImpl.CT_FOLDER;
-		else if (categoryId == 3)
-			path = FileServiceImpl.MK_FOLDER;
-		else if (categoryId == 4)
-			path = FileServiceImpl.CC_FOLDER;
-		else
-			path = FileServiceImpl.HR_FOLDER;
-
-		return path + FILE_SEPARATOR;
-	}
 }

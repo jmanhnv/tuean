@@ -47,11 +47,11 @@
 				<li><a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-th-list"></i><span
 						class="sidebar-mini-hide"><spring:message code="menu.product" /></span></a>
 					<ul>
-						<li><a href="<c:url value="/product"/>">Mái kính</a></li>
-						<li><a href="<c:url value="/product"/>">Ban công</a></li>
-						<li><a href="<c:url value="/product"/>">Song hoa cửa sắt</a></li>
-						<li><a href="<c:url value="/product"/>">Cấu thang</a></li>
-						<li><a href="<c:url value="/product"/>">Hàng rào...</a></li>
+						<li><a href="<c:url value="/product?categoryId=1"/>">Ban công</a></li>
+						<li><a href="<c:url value="/product?categoryId=2"/>">Cấu thang</a></li>
+						<li><a href="<c:url value="/product?categoryId=3"/>">Mái kính</a></li>
+						<li><a href="<c:url value="/product?categoryId=4"/>">Song hoa cửa sắt</a></li>
+						<li><a href="<c:url value="/product?categoryId=5"/>">Hàng rào...</a></li>
 					</ul></li>
 				<li><a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-tasks"></i><span
 						class="sidebar-mini-hide"><spring:message code="menu.category" /></span></a>

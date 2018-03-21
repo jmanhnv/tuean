@@ -2,6 +2,8 @@ package com.tuean.service;
 
 import java.io.InputStream;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.tuean.common.Category;
 import com.tuean.model.File;
 
@@ -26,4 +28,6 @@ public interface FileService {
 
 	String getTempPath();
 
+	//
+	void saveFileUploaded(MultipartFile[] files, Integer categoryId);
 }

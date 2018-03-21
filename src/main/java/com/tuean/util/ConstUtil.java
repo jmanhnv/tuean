@@ -38,4 +38,7 @@ public interface ConstUtil {
 	// Save the uploaded file to this folder
 	String UPLOADED_FOLDER = USER_HOME + FILE_SEPARATOR + "images"; // {/home/cokf3ea1/images/}
 
+	// Alias local file path
+	String ALIAS_FILE_PATH = "alias";
+
 }

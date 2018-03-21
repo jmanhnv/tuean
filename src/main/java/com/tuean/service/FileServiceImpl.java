@@ -12,6 +12,7 @@ import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.tuean.common.Category;
 import com.tuean.dao.FileDao;
@@ -32,28 +33,23 @@ public class FileServiceImpl implements FileService, ConstUtil {
 	static {
 		// BAN_CONG
 		File f = new File(BC_FOLDER);
-		if (!f.exists())
-			f.mkdirs();
+		if (!f.exists()) f.mkdirs();
 
 		// CAU_THANG
 		f = new File(CT_FOLDER);
-		if (!f.exists())
-			f.mkdirs();
+		if (!f.exists()) f.mkdirs();
 
 		// MAI_KINH
 		f = new File(MK_FOLDER);
-		if (!f.exists())
-			f.mkdirs();
+		if (!f.exists()) f.mkdirs();
 
 		// CONG_CUA
 		f = new File(CC_FOLDER);
-		if (!f.exists())
-			f.mkdirs();
+		if (!f.exists()) f.mkdirs();
 
 		// HANG_RAO
 		f = new File(HR_FOLDER);
-		if (!f.exists())
-			f.mkdirs();
+		if (!f.exists()) f.mkdirs();
 	}
 
 	@Autowired
@@ -75,8 +71,7 @@ public class FileServiceImpl implements FileService, ConstUtil {
 		String key = f.getPath() + FILE_SEPARATOR + f.getCode();
 		String path = getLocalFilePath(key);
 		File file = new File(path);
-		if (file.exists() && file.isFile())
-			return file;
+		if (file.exists() && file.isFile()) return file;
 		return null;
 	}
 
@@ -167,8 +162,7 @@ public class FileServiceImpl implements FileService, ConstUtil {
 		// Delete original file
 		String localFilePath = getLocalFilePath(fileKey);
 		File file = new File(localFilePath);
-		if (file.isFile() && file.exists())
-			file.delete();
+		if (file.isFile() && file.exists()) file.delete();
 
 		return true;
 	}
@@ -222,6 +216,12 @@ public class FileServiceImpl implements FileService, ConstUtil {
 			logger.error("Save file error", e);
 			return null;
 		}
+	}
+
+	@Override
+	public void saveFileUploaded(MultipartFile[] files, Integer categoryId) {
+		// TODO Auto-generated method stub
+
 	}
 
 }
