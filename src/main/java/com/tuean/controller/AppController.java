@@ -29,7 +29,7 @@ import com.tuean.common.Actions;
 import com.tuean.common.Helper;
 import com.tuean.formbean.LoginForm;
 import com.tuean.util.ConstUtil;
-import com.tuean.util.ListFilesUtil;
+import com.tuean.util.FilesUtil;
 
 @Controller
 @RequestMapping("/")
@@ -46,7 +46,7 @@ public class AppController implements Actions, ConstUtil {
 
 	@RequestMapping(value = "/product", method = RequestMethod.GET)
 	public String product(@RequestParam("categoryId") int categoryId, ModelMap model) {
-		List<File> files = ListFilesUtil.listFilesOnlyInDirectory(ListFilesUtil.getLocalPathByCategoryId(categoryId));
+		List<File> files = FilesUtil.listFilesOnlyInDirectory(FilesUtil.getLocalPathByCategoryId(categoryId));
 		if (CollectionUtils.isEmpty(files)) model.addAttribute("message", "File not found!");
 
 		List<String> fileNames = files.stream()

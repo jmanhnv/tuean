@@ -11,7 +11,12 @@ import com.tuean.service.FileServiceImpl;
  * 
  * @author Johny
  */
-public class ListFilesUtil implements ConstUtil {
+public class FilesUtil implements ConstUtil {
+	public static final int WIDTH = 720;
+	public static final int HEIGHT = 480;
+	public static final int WIDTH_2X = 1440;
+	public static final int HEIGHT_2X = 960;
+	public static final String SUBFIX = "@2x";
 
 	/**
 	 * Get file path base on categoryId
