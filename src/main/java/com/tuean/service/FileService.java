@@ -1,6 +1,8 @@
 package com.tuean.service;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,5 +31,5 @@ public interface FileService {
 	String getTempPath();
 
 	//
-	void saveFileUploaded(MultipartFile[] files, Integer categoryId);
+	List<String> saveFileUploaded(MultipartFile[] files, Integer categoryId) throws IOException;
 }

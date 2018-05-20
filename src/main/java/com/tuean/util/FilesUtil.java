@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.List;
 
 import com.google.common.collect.Lists;
-import com.tuean.service.FileServiceImpl;
 
 /**
  * Contains some methods to list files and folders from a directory.
@@ -12,36 +11,13 @@ import com.tuean.service.FileServiceImpl;
  * @author Johny
  */
 public class FilesUtil implements ConstUtil {
-	public static final int WIDTH = 720;
-	public static final int HEIGHT = 480;
-	public static final int WIDTH_2X = 1440;
-	public static final int HEIGHT_2X = 960;
-	public static final String SUBFIX = "@2x";
-
-	/**
-	 * Get file path base on categoryId
-	 * 
-	 * @param categoryId
-	 * @return file path
-	 */
-	public static String getLocalPathByCategoryId(int categoryId) {
-		String path;
-		if (categoryId == 1) path = FileServiceImpl.BC_FOLDER;
-		else if (categoryId == 2) path = FileServiceImpl.CT_FOLDER;
-		else if (categoryId == 3) path = FileServiceImpl.MK_FOLDER;
-		else if (categoryId == 4) path = FileServiceImpl.CC_FOLDER;
-		else path = FileServiceImpl.HR_FOLDER;
-
-		return path + FILE_SEPARATOR;
-	}
-
 	/**
 	 * List all the files and folders from a directory
 	 * 
 	 * @param dirName
 	 *            current directory to be listed
 	 */
-	public static List<File> listFilesAndFoldersInDirectory(String dirName) {
+	public static List<File> listFilesAndFoldersInDirectory(final String dirName) {
 		List<File> files = Lists.newArrayList();
 		File directory = new File(dirName);
 		// get all the files and folder from a directory
@@ -59,7 +35,7 @@ public class FilesUtil implements ConstUtil {
 	 * @param dirName
 	 *            current directory to be listed
 	 */
-	public static List<File> listFilesOnlyInDirectory(String dirName) {
+	public static List<File> listFilesOnlyInDirectory(final String dirName) {
 		List<File> files = Lists.newArrayList();
 		File directory = new File(dirName);
 		// get all the files from a directory
@@ -79,7 +55,7 @@ public class FilesUtil implements ConstUtil {
 	 * @param dirName
 	 *            current directory to be listed
 	 */
-	public static List<File> listFoldersOnlyInDirectory(String dirName) {
+	public static List<File> listFoldersOnlyInDirectory(final String dirName) {
 		List<File> files = Lists.newArrayList();
 		File directory = new File(dirName);
 		// get all the files from a directory
@@ -99,7 +75,7 @@ public class FilesUtil implements ConstUtil {
 	 * @param dirName
 	 *            current directory to be listed
 	 */
-	public static List<File> listFilesInDirectoryAndSubDirectories(String dirName) {
+	public static List<File> listFilesInDirectoryAndSubDirectories(final String dirName) {
 		List<File> files = Lists.newArrayList();
 		File directory = new File(dirName);
 		// get all the files from a directory

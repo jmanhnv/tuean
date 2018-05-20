@@ -1,8 +1,10 @@
 package com.tuean.controller;
 
 import java.io.File;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.google.common.collect.Maps;
 import com.tuean.common.Actions;
 import com.tuean.common.Helper;
 import com.tuean.formbean.LoginForm;
@@ -46,13 +49,23 @@ public class AppController implements Actions, ConstUtil {
 
 	@RequestMapping(value = "/product", method = RequestMethod.GET)
 	public String product(@RequestParam("categoryId") int categoryId, ModelMap model) {
-		List<File> files = FilesUtil.listFilesOnlyInDirectory(FilesUtil.getLocalPathByCategoryId(categoryId));
-		if (CollectionUtils.isEmpty(files)) model.addAttribute("message", "File not found!");
+		List<File> files = FilesUtil.listFilesOnlyInDirectory(Helper.getLocalPathByCategoryId(categoryId));
+		if (CollectionUtils.isEmpty(files))
+			model.addAttribute("message", "File not found!");
 
 		List<String> fileNames = files.stream()
 				.map(f -> ALIAS_FILE_PATH + SLASH + Helper.getCategoryNameById(categoryId) + SLASH + f.getName())
 				.collect(Collectors.toList());
-		model.addAttribute("files", fileNames);
+
+		// sort list as ascending
+		Collections.sort(fileNames);
+
+		// put to map
+		Map<String, String> dt = Maps.newHashMap();
+		for (int i = 0; i < fileNames.size(); i += 2)
+			dt.put(fileNames.get(i), fileNames.get(i + 1));
+
+		model.addAttribute("files", dt);
 		return PRODUCT;
 	}
 
@@ -82,7 +95,8 @@ public class AppController implements Actions, ConstUtil {
 	public String logout(HttpServletRequest req, HttpServletResponse resp, ModelMap model,
 			@ModelAttribute("loginBean") LoginForm loginBean) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		if (auth != null) new SecurityContextLogoutHandler().logout(req, resp, auth);
+		if (auth != null)
+			new SecurityContextLogoutHandler().logout(req, resp, auth);
 
 		model.addAttribute("msg", messageSource.getMessage("logout.msg", new Object[] { "Johny Nguyen" },
 				LocaleContextHolder.getLocale()));

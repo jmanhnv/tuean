@@ -14,7 +14,10 @@ public class FileDaoImpl extends GenericDao<File> implements FileDao, ConstUtil 
 
 	@Override
 	public File save(File f) {
-		// TODO Auto-generated method stub
+		String sql = "INSERT INTO ta_file(code, name, extension, category_id, original_name, path, description) VALUES(?, ?, ?, ?, ?, ?, ?)";
+		Object[] args = { f.getCode(), f.getName(), f.getExtension(), f.getCategory().getId(), f.getOriginal_name(),
+				f.getPath(), f.getDescription() };
+		executeQuery(sql, args);
 		return null;
 	}
 

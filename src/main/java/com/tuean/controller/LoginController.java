@@ -26,7 +26,7 @@ public class LoginController implements Actions, ConstUtil {
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(ModelMap model, @ModelAttribute LoginForm loginBean) {
-		//@ModelAttribute("loginBean")Login loginBean
+		// @ModelAttribute("loginBean")Login loginBean
 		if (loginBean != null && !Strings.isNullOrEmpty(loginBean.getEmail())
 				&& !Strings.isNullOrEmpty(loginBean.getPassword())) {
 			try {

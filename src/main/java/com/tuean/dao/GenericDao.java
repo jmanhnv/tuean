@@ -3,10 +3,12 @@ package com.tuean.dao;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.tuean.model.AbstractEntity;
 
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public abstract class GenericDao<T extends AbstractEntity> {
 	@Autowired
 	protected JdbcTemplate jdbcTemplate;
@@ -19,6 +21,7 @@ public abstract class GenericDao<T extends AbstractEntity> {
 	 */
 	public void executeQuery(String sql, Object... args) {
 		jdbcTemplate.update(sql, args);
+		System.out.println("insert | update | delete was Added | Updated | Deleted!!");
 	}
 
 	/**
@@ -29,7 +32,7 @@ public abstract class GenericDao<T extends AbstractEntity> {
 	 * @return
 	 */
 	public T findById(String sql, Integer id, Class<T> clazz) {
-		return jdbcTemplate.queryForObject(sql, new Object[] { id }, clazz);
+		return (T) jdbcTemplate.queryForObject(sql, new Object[] { id }, new BeanPropertyRowMapper(clazz));
 	}
 
 	/**
@@ -38,7 +41,7 @@ public abstract class GenericDao<T extends AbstractEntity> {
 	 * @return
 	 */
 	public List<T> findAll(String sql, Class<T> clazz) {
-		return jdbcTemplate.queryForList(sql, clazz);
+		return (List<T>) jdbcTemplate.queryForList(sql, new BeanPropertyRowMapper(clazz));
 	}
 
 }

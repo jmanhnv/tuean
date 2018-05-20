@@ -13,8 +13,7 @@ public final class LogUtil {
 	 * Method use to write log.
 	 *
 	 * @param clazz
-	 *            instance class @param <T> the generic class @return {@link Logger}
-	 *            instance @throws
+	 *            instance class @param <T> the generic class @return {@link Logger} instance @throws
 	 */
 	public static <T> Logger getLogger(final Class<T> clazz) {
 		if (clazz == null)
@@ -24,9 +23,8 @@ public final class LogUtil {
 	}
 
 	/**
-	 * IMPORTANT NOTE: Getting the correct logger without providing the class. It is
-	 * an EXPENSIVE OPERATION, so it should only be called from static
-	 * initialization
+	 * IMPORTANT NOTE: Getting the correct logger without providing the class. It is an EXPENSIVE OPERATION, so it
+	 * should only be called from static initialization
 	 */
 	public static Logger getLog() {
 		StackTraceElement[] stackTraces = Thread.currentThread().getStackTrace();

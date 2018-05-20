@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import org.apache.commons.io.FileUtils;
@@ -14,10 +15,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.common.base.Strings;
+import com.google.common.collect.Lists;
 import com.tuean.common.Category;
+import com.tuean.common.Helper;
 import com.tuean.dao.FileDao;
 import com.tuean.util.ConstUtil;
 import com.tuean.util.DateCfg;
+import com.tuean.util.ImageUtil;
 import com.tuean.util.LogUtil;
 
 @Service("fileService")
@@ -33,23 +38,28 @@ public class FileServiceImpl implements FileService, ConstUtil {
 	static {
 		// BAN_CONG
 		File f = new File(BC_FOLDER);
-		if (!f.exists()) f.mkdirs();
+		if (!f.exists())
+			f.mkdirs();
 
 		// CAU_THANG
 		f = new File(CT_FOLDER);
-		if (!f.exists()) f.mkdirs();
+		if (!f.exists())
+			f.mkdirs();
 
 		// MAI_KINH
 		f = new File(MK_FOLDER);
-		if (!f.exists()) f.mkdirs();
+		if (!f.exists())
+			f.mkdirs();
 
 		// CONG_CUA
 		f = new File(CC_FOLDER);
-		if (!f.exists()) f.mkdirs();
+		if (!f.exists())
+			f.mkdirs();
 
 		// HANG_RAO
 		f = new File(HR_FOLDER);
-		if (!f.exists()) f.mkdirs();
+		if (!f.exists())
+			f.mkdirs();
 	}
 
 	@Autowired
@@ -71,7 +81,8 @@ public class FileServiceImpl implements FileService, ConstUtil {
 		String key = f.getPath() + FILE_SEPARATOR + f.getCode();
 		String path = getLocalFilePath(key);
 		File file = new File(path);
-		if (file.exists() && file.isFile()) return file;
+		if (file.exists() && file.isFile())
+			return file;
 		return null;
 	}
 
@@ -162,14 +173,10 @@ public class FileServiceImpl implements FileService, ConstUtil {
 		// Delete original file
 		String localFilePath = getLocalFilePath(fileKey);
 		File file = new File(localFilePath);
-		if (file.isFile() && file.exists()) file.delete();
+		if (file.isFile() && file.exists())
+			file.delete();
 
 		return true;
-	}
-
-	@Override
-	public com.tuean.model.File saveFile(File f, String extension, Category category) {
-		return saveFile(f, extension, category.toString());
 	}
 
 	@Override
@@ -187,41 +194,60 @@ public class FileServiceImpl implements FileService, ConstUtil {
 		return getLocalTempPath();
 	}
 
-	private com.tuean.model.File saveFile(java.io.File file, String extension, String category) {
+	public com.tuean.model.File saveFile(File file, String extension, Category category) {
 		String uuid = UUID.randomUUID().toString();
-		String fileKey = category + FILE_SEPARATOR + uuid;
-		// save tmp file to physics file
-		String localFilePath;
 
-		try {
-			// 1.0 Copy file to local
-			localFilePath = getLocalFilePath(fileKey);
-			// 1.1 Copy original file
-			FileUtils.copyFile(file, new File(localFilePath));
+		com.tuean.model.Category cat = new com.tuean.model.Category();
+		cat.setId(category.getKey());
+		cat.setName(category.toString());
+		cat.setDescription(category.toString());
 
-			// save current file into database
-			final Date now = DateCfg.getSysDate();
-			com.tuean.model.File f = new com.tuean.model.File();
-			f.setCode(uuid);
-			f.setName(file.getName());
-			f.setOriginal_name(file.getName());
-			f.setPath(category);
-			f.setExtension(extension);
-			f.setCreatedDate(now);
-			f.setUpdatedDate(now);
+		final Date now = DateCfg.getSysDate();
+		com.tuean.model.File f = new com.tuean.model.File();
+		f.setCode(uuid);
+		f.setName(file.getName());
+		f.setOriginal_name(file.getName());
+		f.setPath(getLocalFilePath(file.getName()));
+		f.setExtension(extension);
+		f.setCategory(cat);
+		f.setCreatedDate(now);
+		f.setUpdatedDate(now);
 
-			f = fileDao.save(f);
-			return f;
-		} catch (IOException e) {
-			logger.error("Save file error", e);
-			return null;
-		}
+		f = fileDao.save(f);
+		return f;
 	}
 
 	@Override
-	public void saveFileUploaded(MultipartFile[] files, Integer categoryId) {
-		// TODO Auto-generated method stub
+	public List<String> saveFileUploaded(MultipartFile[] files, Integer categoryId) throws IOException {
+		List<String> fileNames = Lists.newArrayList();
 
+		// Get category
+		Category category = Helper.getCategoryById(categoryId);
+
+		// Loop file
+		for (MultipartFile file : files) {
+			String fileName = file.getOriginalFilename();
+			if (!Strings.isNullOrEmpty(fileName)) {
+				// Handle file content - multipartFile.getInputStream()
+				// file.transferTo(new File(FilesUtil.getLocalPathByCategoryId(categoryId) + fileName));
+
+				// 1. Copy file to local
+				// dimension for normal size (default)
+				ImageUtil.resizeImage(file, categoryId, ImageUtil.WIDTH, ImageUtil.HEIGHT);
+
+				// dimension for view detail size
+				ImageUtil.resizeImage(file, categoryId, ImageUtil.WIDTH_2X, ImageUtil.HEIGHT_2X);
+
+				// 2. Save current file into database
+				final String extension = fileName.substring(fileName.lastIndexOf(DOT));
+				File f = new File(Helper.getLocalPathByCategoryId(categoryId) + fileName);
+				saveFile(f, extension, category);
+
+				fileNames.add(fileName);
+			}
+		}
+
+		return fileNames;
 	}
 
 }

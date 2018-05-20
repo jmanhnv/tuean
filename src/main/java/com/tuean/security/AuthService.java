@@ -24,7 +24,8 @@ public class AuthService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		UserDto user = userDao.findByEmail(email);
-		if (user == null) throw new UsernameNotFoundException("User " + email + " was not found in the database");
+		if (user == null)
+			throw new UsernameNotFoundException("User " + email + " was not found in the database");
 
 		// [USER,ADMIN,..]
 		List<GrantedAuthority> authorities = Lists.newArrayList();
