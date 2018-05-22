@@ -25,10 +25,6 @@
 	<definition name="uploadfile" extends="base-definition">
 		<put-attribute name="body" value="/WEB-INF/views/pages/uploadfile.jsp" />
 	</definition>
-	<!-- Upload success Page -->
-	<definition name="uploadstatus" extends="base-definition">
-		<put-attribute name="body" value="/WEB-INF/views/pages/uploadstatus.jsp" />
-	</definition>
 	<!-- INTRODUCTION Page -->
 	<definition name="introduce" extends="base-definition">
 		<put-attribute name="body" value="/WEB-INF/views/pages/introduction.jsp" />

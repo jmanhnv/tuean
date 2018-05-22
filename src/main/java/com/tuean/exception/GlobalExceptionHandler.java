@@ -8,9 +8,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 	@ExceptionHandler(MultipartException.class)
-	public String handleError(MultipartException e, RedirectAttributes redirectAttributes) {
-		redirectAttributes.addFlashAttribute("message", e.getCause().getMessage());
-		return "redirect:/uploadstatus";
+	public String handleError1(MultipartException e, RedirectAttributes redirectAttributes) {
+		redirectAttributes.addFlashAttribute("css", "danger");
+		redirectAttributes.addFlashAttribute("msg", e.getCause().getMessage());
+		return "redirect:/upload";
 
 	}
+
 }

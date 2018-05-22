@@ -21,9 +21,10 @@
 							<div class="img-options-content">
 								<!-- <h3 class="font-w400 text-white push-5">Image Caption</h3> -->
 								<!-- <h4 class="h6 font-w400 text-white-op push-15">Some Extra Info</h4> -->
-								<a class="btn btn-sm btn-default img-lightbox" href="${f.value}"> <i class="fa fa-search-plus"></i> View</a>
+								<a class="btn btn-sm btn-default img-lightbox" href="${f.value}"><i class="fa fa-search-plus"></i> View</a>
 								<div class="btn-group btn-group-sm">
-									<a class="btn btn-default" href="javascript:void(0)"><i class="fa fa-pencil"></i> Edit</a>
+									<a class="btn btn-default" href="<c:url value='/download-${f.value}' />"><i class="fa fa-download"></i> Download</a>
+									<!-- <a class="btn btn-default" href="javascript:void(0)"><i class="fa fa-pencil"></i> Edit</a> -->
 									<a class="btn btn-default" href="javascript:void(0)"><i class="fa fa-times"></i> Delete</a>
 								</div>
 							</div>

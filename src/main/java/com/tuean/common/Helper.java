@@ -1,7 +1,7 @@
 package com.tuean.common;
 
-import com.tuean.service.FileServiceImpl;
 import com.tuean.util.ConstUtil;
+import com.tuean.util.ImageUtil;
 
 public final class Helper implements ConstUtil {
 	/**
@@ -28,15 +28,15 @@ public final class Helper implements ConstUtil {
 	public static String getLocalPathByCategoryId(final int categoryId) {
 		String path;
 		if (categoryId == 1)
-			path = FileServiceImpl.BC_FOLDER;
+			path = ImageUtil.BC_FOLDER;
 		else if (categoryId == 2)
-			path = FileServiceImpl.CT_FOLDER;
+			path = ImageUtil.CT_FOLDER;
 		else if (categoryId == 3)
-			path = FileServiceImpl.MK_FOLDER;
+			path = ImageUtil.MK_FOLDER;
 		else if (categoryId == 4)
-			path = FileServiceImpl.CC_FOLDER;
+			path = ImageUtil.CC_FOLDER;
 		else
-			path = FileServiceImpl.HR_FOLDER;
+			path = ImageUtil.HR_FOLDER;
 
 		return path + FILE_SEPARATOR;
 	}

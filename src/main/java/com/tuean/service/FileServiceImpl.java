@@ -27,40 +27,7 @@ import com.tuean.util.LogUtil;
 
 @Service("fileService")
 public class FileServiceImpl implements FileService, ConstUtil {
-	private static final Logger logger = LogUtil.getLogger(FileServiceImpl.class);
-
-	public static final String BC_FOLDER = UPLOADED_FOLDER + FILE_SEPARATOR + Category.BAN_CONG;
-	public static final String CT_FOLDER = UPLOADED_FOLDER + FILE_SEPARATOR + Category.CAU_THANG;
-	public static final String MK_FOLDER = UPLOADED_FOLDER + FILE_SEPARATOR + Category.MAI_KINH;
-	public static final String CC_FOLDER = UPLOADED_FOLDER + FILE_SEPARATOR + Category.CONG_CUA;
-	public static final String HR_FOLDER = UPLOADED_FOLDER + FILE_SEPARATOR + Category.HANG_RAO;
-
-	static {
-		// BAN_CONG
-		File f = new File(BC_FOLDER);
-		if (!f.exists())
-			f.mkdirs();
-
-		// CAU_THANG
-		f = new File(CT_FOLDER);
-		if (!f.exists())
-			f.mkdirs();
-
-		// MAI_KINH
-		f = new File(MK_FOLDER);
-		if (!f.exists())
-			f.mkdirs();
-
-		// CONG_CUA
-		f = new File(CC_FOLDER);
-		if (!f.exists())
-			f.mkdirs();
-
-		// HANG_RAO
-		f = new File(HR_FOLDER);
-		if (!f.exists())
-			f.mkdirs();
-	}
+	private static final Logger logger = LogUtil.getLogger(ImageUtil.class);
 
 	@Autowired
 	private FileDao fileDao;
@@ -194,21 +161,20 @@ public class FileServiceImpl implements FileService, ConstUtil {
 		return getLocalTempPath();
 	}
 
-	public com.tuean.model.File saveFile(File file, String extension, Category category) {
-		String uuid = UUID.randomUUID().toString();
-
+	public com.tuean.model.File saveFile(File file, String fileCode, Category category) {
 		com.tuean.model.Category cat = new com.tuean.model.Category();
 		cat.setId(category.getKey());
 		cat.setName(category.toString());
 		cat.setDescription(category.toString());
 
+		final String fName = file.getName();
 		final Date now = DateCfg.getSysDate();
 		com.tuean.model.File f = new com.tuean.model.File();
-		f.setCode(uuid);
-		f.setName(file.getName());
-		f.setOriginal_name(file.getName());
-		f.setPath(getLocalFilePath(file.getName()));
-		f.setExtension(extension);
+		f.setCode(fileCode);
+		f.setName(fName);
+		f.setOriginal_name(fName);
+		f.setPath(Helper.getLocalPathByCategoryId(category.getKey()) + fName);
+		f.setExtension(FilenameUtils.getExtension(file.getName()));
 		f.setCategory(cat);
 		f.setCreatedDate(now);
 		f.setUpdatedDate(now);
@@ -231,19 +197,23 @@ public class FileServiceImpl implements FileService, ConstUtil {
 				// Handle file content - multipartFile.getInputStream()
 				// file.transferTo(new File(FilesUtil.getLocalPathByCategoryId(categoryId) + fileName));
 
+				// 0. Generate file code
+				final String fileCode = UUID.randomUUID().toString();
+				final String extension = FilenameUtils.getExtension(fileName);
+				final String newFileName = fileCode + DOT + extension;
+
 				// 1. Copy file to local
 				// dimension for normal size (default)
-				ImageUtil.resizeImage(file, categoryId, ImageUtil.WIDTH, ImageUtil.HEIGHT);
+				ImageUtil.resizeImage(file, categoryId, ImageUtil.WIDTH, ImageUtil.HEIGHT, newFileName);
 
 				// dimension for view detail size
-				ImageUtil.resizeImage(file, categoryId, ImageUtil.WIDTH_2X, ImageUtil.HEIGHT_2X);
+				ImageUtil.resizeImage(file, categoryId, ImageUtil.WIDTH_2X, ImageUtil.HEIGHT_2X, newFileName);
 
 				// 2. Save current file into database
-				final String extension = fileName.substring(fileName.lastIndexOf(DOT));
-				File f = new File(Helper.getLocalPathByCategoryId(categoryId) + fileName);
-				saveFile(f, extension, category);
+				File f = new File(Helper.getLocalPathByCategoryId(categoryId) + newFileName);
+				saveFile(f, fileCode, category);
 
-				fileNames.add(fileName);
+				fileNames.add(newFileName);
 			}
 		}
 

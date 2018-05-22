@@ -17,5 +17,4 @@ public interface Actions {
 	String ACCESS_DENIED = "access_denied";
 
 	String UPLOADFILE = "uploadfile";
-	String UPLOADFILE_SUCCESS = "uploadstatus";
 }

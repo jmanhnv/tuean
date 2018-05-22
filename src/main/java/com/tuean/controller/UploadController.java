@@ -5,11 +5,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tuean.common.Actions;
 import com.tuean.service.FileService;
@@ -27,22 +27,24 @@ public class UploadController implements Actions, ConstUtil {
 
 	@RequestMapping(value = "/savefiles", method = RequestMethod.POST)
 	public String saveFiles(@RequestParam("category") String category, @RequestParam("files") MultipartFile[] files,
-			Model map) throws IllegalStateException, IOException {
-		String msg;
-		if (files == null || files.length == 0) {
-			msg = "Please select a file to upload.";
+			RedirectAttributes redirectAttributes) throws IllegalStateException, IOException {
+		String css;
+		String msgContent;
+		if (files == null || files.length == 0 || files[0].isEmpty()) {
+			css = "danger";
+			msgContent = "Please select a file to upload.";
+		} else {
+			Integer categoryId = Integer.valueOf(category);
+			// save file to local & db
+			List<String> uploads = fileService.saveFileUploaded(files, categoryId);
+			css = "success";
+			msgContent = String.format("%d file(s) uploaded successfully.", uploads.size());
 		}
 
-		Integer categoryId = Integer.valueOf(category);
+		redirectAttributes.addFlashAttribute("css", css);
+		redirectAttributes.addFlashAttribute("msgContent", msgContent);
 
-		// save file to local & db
-		List<String> uploads = fileService.saveFileUploaded(files, categoryId);
-		msg = "You successfully uploaded '" + uploads + "'";
-
-		map.addAttribute("message", msg);
-		map.addAttribute("files", uploads);
-
-		return UPLOADFILE_SUCCESS;
+		return "redirect:/upload";
 	}
 
 }

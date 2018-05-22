@@ -15,6 +15,12 @@ import com.tuean.util.ConstUtil;
 public class AppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer implements ConstUtil {
 	private static final int MAX_FILESIZE_UPLOAD = 10 * 1024 * 1024; // 10 MB
 
+	/* Set these variables for your project needs */
+	private static final String LOCATION = TMP_DIR;
+	private static final long MAX_FILE_SIZE = 1024 * 1024 * 25;// 25MB
+	private static final long MAX_REQUEST_SIZE = 1024 * 1024 * 30;// 30MB
+	private static final int FILE_SIZE_THRESHOLD = 0;
+
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
 		return new Class[] { AppConfig.class };
@@ -33,9 +39,11 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
 	@Override
 	protected void customizeRegistration(Dynamic registration) {
 		// upload temp file will put here
-		File uploadDirectory = new File(System.getProperty("java.io.tmpdir"));
+		File uploadDirectory = new File(LOCATION);
 
 		// register a MultipartConfigElement
+		// MultipartConfigElement multipartConfigElement = new MultipartConfigElement(LOCATION, MAX_FILE_SIZE,
+		// MAX_REQUEST_SIZE, FILE_SIZE_THRESHOLD);
 		MultipartConfigElement multipartConfigElement = new MultipartConfigElement(uploadDirectory.getAbsolutePath(),
 				MAX_FILESIZE_UPLOAD, MAX_FILESIZE_UPLOAD * 2, MAX_FILESIZE_UPLOAD / 2);
 
